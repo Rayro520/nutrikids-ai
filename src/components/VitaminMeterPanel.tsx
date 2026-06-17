@@ -246,157 +246,148 @@ export default function VitaminMeterPanel({ activeProfile, onAddLogMessage }: Vi
   const activeAlerts = getDailyAlerts();
 
   return (
-    <div id="vitamin-meter-panel" className="bg-white rounded-3xl border border-orange-100/40 shadow-xs p-5 grid grid-cols-1 lg:grid-cols-12 gap-6">
-      
-      {/* Visual Vitamin Dashboard - 7 columns */}
-      <div className="lg:col-span-7 space-y-4">
-        <div className="flex items-center gap-2 border-b border-orange-50/70 pb-3 mb-1">
-          <Award className="w-5 h-5 text-orange-500 animate-gentle-pulse" />
-          <div>
-            <h2 className="text-base font-black text-gray-800 tracking-tight font-display">Vitaminômetro Kids</h2>
-            <p className="text-[10px] text-gray-450 leading-none">
-              Recomendação OMS/SBP: <strong className="text-slate-700 font-bold">{currentCategory.replace("_", " ")}</strong>
-            </p>
+    <div id="vitamin-meter-panel" className="bg-white rounded-3xl border border-orange-100/40 shadow-xs overflow-hidden">
+
+      {/* Header */}
+      <div className="bg-gradient-to-r from-orange-500 to-amber-400 px-4 pt-4 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+              <Award className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-sm font-black text-white leading-tight">Vitaminômetro</h2>
+              <p className="text-[9px] text-white/75 font-medium mt-0.5">Metas diárias OMS/SBP · {currentCategory.replace(/_/g, " ")}</p>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Vitamin/Mineral grid bars */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="p-4 space-y-5">
+
+        {/* ── Vitamin bars ── */}
+        <div className="space-y-2.5">
+          <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Metas diárias</p>
           {renderVitamins.map((vit) => {
             const percentage = Math.min(100, Math.round((vit.current / vit.target) * 100));
+            const isOk = percentage >= 70;
+            const isLow = percentage < 35;
             return (
-              <div key={vit.label} className="p-3 bg-gray-50/50 rounded-xl border border-gray-100/30 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className="font-bold text-[11px] text-gray-700 block">{vit.label}</span>
-                    <span className="text-[9px] text-gray-400 leading-tight block truncate max-w-[120px]" title={NUTRIENT_METADATA[vit.label]?.desc}>
-                      {NUTRIENT_METADATA[vit.label]?.desc}
-                    </span>
-                  </div>
-                  <span className="text-[9.5px] font-extrabold text-slate-800 shrink-0">
-                    {percentage}%
+              <div key={vit.label} className="flex items-center gap-3">
+                {/* Name + desc */}
+                <div className="w-24 shrink-0">
+                  <span className="text-[11px] font-black text-slate-700 block leading-none">{vit.label}</span>
+                  <span className="text-[8.5px] text-gray-400 leading-tight block mt-0.5 truncate" title={NUTRIENT_METADATA[vit.label]?.desc}>
+                    {NUTRIENT_METADATA[vit.label]?.desc}
                   </span>
                 </div>
-
-                <div className="mt-3">
-                  <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                {/* Bar */}
+                <div className="flex-1 min-w-0">
+                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div
-                       className={`h-full rounded-full transition-all duration-500 ${vit.color}`}
-                       style={{ width: `${percentage}%` }}
+                      className={`h-full rounded-full transition-all duration-500 ${vit.color}`}
+                      style={{ width: `${percentage}%` }}
                     />
                   </div>
-                  <span className="text-[9.5px] font-bold text-slate-500 mt-1 block">
+                  <span className="text-[8.5px] text-gray-400 font-medium mt-0.5 block">
                     {vit.current.toFixed(1)} / {vit.target} {vit.unit}
                   </span>
                 </div>
+                {/* % badge */}
+                <span className={`text-[10px] font-extrabold w-9 text-right shrink-0 ${isOk ? "text-emerald-600" : isLow ? "text-rose-500" : "text-amber-600"}`}>
+                  {percentage}%
+                </span>
               </div>
             );
           })}
         </div>
 
-        {/* Smart Alerts list */}
+        {/* ── Alerts ── */}
         {activeAlerts.length > 0 && (
-          <div className="bg-amber-50/45 p-3.5 rounded-2xl border border-amber-100/70 mt-2 space-y-1.5">
-            <span className="text-[9px] font-black text-amber-850 uppercase tracking-widest block leading-none">⚠️ Alertas Nutricionais</span>
+          <div className="bg-amber-50 border border-amber-100 rounded-2xl p-3.5 space-y-2">
+            <span className="text-[9px] font-black text-amber-700 uppercase tracking-widest block">⚠️ Alertas Nutricionais</span>
             {activeAlerts.map((alert, idx) => (
-              <div key={idx} className="flex items-start gap-1.5 text-[11px] text-amber-900 leading-snug font-medium">
+              <div key={idx} className="flex items-start gap-2 text-[11px] text-amber-900 leading-snug font-medium">
                 <AlertTriangle className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" />
                 <span>{alert}</span>
               </div>
             ))}
           </div>
         )}
-      </div>
 
-      {/* Dynamic Journal Registration - 5 columns */}
-      <div className="lg:col-span-5 border-l border-gray-100 lg:pl-6 space-y-4">
-        <div className="flex items-center justify-between border-b border-gray-50 pb-3">
-          <h3 className="font-black text-gray-800 text-xs uppercase tracking-wider font-display">Diário de Alimentação</h3>
-          {logs.length > 0 && (
-            <button
-              onClick={handleClearLogs}
-              className="text-[10px] font-bold text-rose-500 hover:underline"
-            >
-              Excluir Tudo
-            </button>
-          )}
-        </div>
-
-        {/* Logging Form */}
-        <form onSubmit={handleAddFood} className="space-y-3 bg-slate-50/50 p-4 rounded-xl border border-gray-100/50">
-          <div>
-            <label className="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1">Qual alimento deu hoje?</label>
-            <input
-              type="text"
-              required
-              placeholder="Ex: Banana amassada, Gema de ovo..."
-              value={inputFood}
-              onChange={(e) => setInputFood(e.target.value)}
-              className="w-full px-3 py-1.5 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-orange-400 font-semibold"
-            />
+        {/* ── Food diary ── */}
+        <div className="bg-orange-50/30 border border-orange-100/60 rounded-2xl overflow-hidden">
+          {/* Section header */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-orange-100/50">
+            <span className="text-[10px] font-black text-orange-700 uppercase tracking-widest">Diário de Alimentação</span>
+            {logs.length > 0 && (
+              <button onClick={handleClearLogs} className="text-[10px] font-bold text-rose-400 hover:text-rose-600 transition-colors">
+                Limpar tudo
+              </button>
+            )}
           </div>
 
-          <div>
-            <label className="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1">Porção oferecida</label>
-            <input
-              type="text"
-              placeholder="Ex: 1 banana, 1 gema..."
-              value={inputPortion}
-              onChange={(e) => setInputPortion(e.target.value)}
-              className="w-full px-3 py-1.5 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-orange-400 font-semibold"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition-all shadow-xs flex items-center justify-center gap-1 active:scale-95"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            Lançar Alimento
-          </button>
-        </form>
-
-        {/* Current list of items */}
-        <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
-          {logs.length > 0 ? (
-            logs.map((log) => (
-              <div key={log.id} className="p-3 bg-white border border-gray-100 rounded-xl flex items-center justify-between gap-2 shadow-xs">
-                <div className="min-w-0">
-                  <span className="block font-bold text-xs text-slate-800 truncate">{log.foodName}</span>
-                  <div className="flex gap-2 items-center text-[10px] text-gray-400 font-medium mt-0.5">
-                    <span>{log.portionSize}</span>
-                    <span>•</span>
-                    <span>{log.calories} kcal</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  {/* Micro list of added vitamins */}
-                  <div className="flex flex-wrap gap-0.5 max-w-[90px] justify-end">
-                    {Object.keys(log.vitaminsAndMinerals).map((vit) => (
-                      <span key={vit} className="text-[8px] bg-slate-50 border border-slate-100 text-gray-500 px-1 py-0.2 rounded-sm shrink-0">
-                        {vit.split(" ")[1] || vit}
-                      </span>
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => handleRemoveLog(log.id)}
-                    className="p-1 hover:bg-rose-50 text-rose-450 hover:text-rose-600 rounded transition-colors"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+          <div className="p-3 space-y-3">
+            {/* Input form */}
+            <form onSubmit={handleAddFood} className="flex gap-2">
+              <div className="flex-1 min-w-0 space-y-1.5">
+                <input
+                  type="text"
+                  required
+                  placeholder="Alimento oferecido hoje…"
+                  value={inputFood}
+                  onChange={(e) => setInputFood(e.target.value)}
+                  className="w-full px-3 py-2 bg-white border border-orange-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-orange-400 font-semibold"
+                />
+                <input
+                  type="text"
+                  placeholder="Porção (ex: 1 banana)"
+                  value={inputPortion}
+                  onChange={(e) => setInputPortion(e.target.value)}
+                  className="w-full px-3 py-2 bg-white border border-orange-100 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-orange-300 font-medium text-gray-600"
+                />
               </div>
-            ))
-          ) : (
-            <div className="text-center py-8 border border-dashed border-gray-150 rounded-xl bg-gray-50/20">
-              <Smile className="w-6 h-6 text-gray-300 mx-auto mb-1.5" />
-              <p className="text-xs text-gray-400 font-semibold mb-0.5">Nenhum lançamento hoje</p>
-              <p className="text-[10px] text-gray-400">Lance alimentos acima para acumular vitaminas!</p>
+              <button
+                type="submit"
+                className="shrink-0 w-10 h-full bg-orange-500 hover:bg-orange-600 text-white rounded-xl transition-all active:scale-95 flex items-center justify-center shadow-xs"
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </form>
+
+            {/* Log list */}
+            <div className="space-y-1.5 max-h-48 overflow-y-auto">
+              {logs.length > 0 ? (
+                logs.map((log) => (
+                  <div key={log.id} className="flex items-center gap-2 bg-white border border-gray-100 rounded-xl px-3 py-2 shadow-xs">
+                    <div className="flex-1 min-w-0">
+                      <span className="block font-bold text-xs text-slate-800 truncate">{log.foodName}</span>
+                      <span className="text-[9px] text-gray-400 font-medium">{log.portionSize} · {log.calories} kcal</span>
+                    </div>
+                    <div className="flex gap-0.5 shrink-0">
+                      {Object.keys(log.vitaminsAndMinerals).slice(0, 3).map((vit) => (
+                        <span key={vit} className="text-[7.5px] bg-orange-50 border border-orange-100 text-orange-600 px-1 py-0.5 rounded font-bold">
+                          {vit.split(" ")[1] || vit}
+                        </span>
+                      ))}
+                    </div>
+                    <button onClick={() => handleRemoveLog(log.id)} className="p-1 text-gray-300 hover:text-rose-400 transition-colors">
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-6 border border-dashed border-orange-100 rounded-xl">
+                  <Smile className="w-6 h-6 text-orange-200 mx-auto mb-1.5" />
+                  <p className="text-xs text-gray-400 font-semibold">Nenhum alimento lançado hoje</p>
+                  <p className="text-[10px] text-gray-300 mt-0.5">Adicione para acumular vitaminas!</p>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
-      </div>
+
+      </div>{/* end p-4 */}
     </div>
   );
 }

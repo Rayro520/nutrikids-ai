@@ -1,0 +1,6 @@
+{
+  "name": "NutriKids AI",
+  "description": "Consultório e guia de nutrição infantil inteligente auxiliado por IA, baseado em diretrizes da OMS, SBP e UNICEF.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -514,12 +514,12 @@ export default function App() {
 
               <div className="grid grid-cols-3 gap-2.5">
                 {[
-                  { tab: "growth",    icon: <Activity className="w-5 h-5" />,   title: t.crescimentoName,    desc: language === "pt" ? "Peso & altura OMS" : language === "en" ? "WHO weight & height" : "Peso & altura OMS" },
-                  { tab: "vitamins",  icon: <Award className="w-5 h-5" />,      title: t.vitaminometroName,  desc: language === "pt" ? "Vitaminas do dia" : language === "en" ? "Daily vitamins" : "Vitaminas del día" },
-                  { tab: "forum",     icon: <Users className="w-5 h-5" />,      title: t.comunidadeName,     desc: language === "pt" ? "Comunidade mães" : language === "en" ? "Mom community" : "Comunidad madres" },
-                  { tab: "vaccines",  icon: <Syringe className="w-5 h-5" />,    title: language === "pt" ? "Vacinas" : language === "en" ? "Vaccines" : "Vacunas",           desc: "SBP 2024" },
-                  { tab: "diary",     icon: <BookHeart className="w-5 h-5" />,  title: language === "pt" ? "Diário" : language === "en" ? "Diary" : "Diario",               desc: language === "pt" ? "Refeições & sono" : language === "en" ? "Meals & sleep" : "Comidas & sueño" },
-                  { tab: "resources", icon: <ShieldCheck className="w-5 h-5" />,title: t.seloCientificoName, desc: language === "pt" ? "Fontes científicas" : language === "en" ? "Scientific sources" : "Fuentes científicas" },
+                  { tab: "growth",    icon: <Activity className="w-5 h-5" />,    title: t.crescimentoName,    desc: language === "pt" ? "Peso & altura OMS"   : language === "en" ? "WHO weight & height"  : "Peso & altura OMS"    },
+                  { tab: "vitamins",  icon: <Award className="w-5 h-5" />,       title: t.vitaminometroName,  desc: language === "pt" ? "Vitaminas do dia"    : language === "en" ? "Daily vitamins"       : "Vitaminas del día"    },
+                  { tab: "meals",     icon: <ChefHat className="w-5 h-5" />,     title: language === "pt" ? "Cardápio" : language === "en" ? "Menu" : "Menú",  desc: language === "pt" ? "Refeições SBP"      : language === "en" ? "SBP meals"            : "Comidas SBP"          },
+                  { tab: "vaccines",  icon: <Syringe className="w-5 h-5" />,     title: language === "pt" ? "Vacinas"  : language === "en" ? "Vaccines" : "Vacunas", desc: "SBP 2024" },
+                  { tab: "forum",     icon: <Users className="w-5 h-5" />,       title: t.comunidadeName,     desc: language === "pt" ? "Comunidade mães"     : language === "en" ? "Mom community"        : "Comunidad madres"     },
+                  { tab: "resources", icon: <ShieldCheck className="w-5 h-5" />, title: t.seloCientificoName, desc: language === "pt" ? "Fontes científicas"   : language === "en" ? "Scientific sources"   : "Fuentes científicas"  },
                 ].map((item) => (
                   <button
                     key={item.tab}
@@ -562,11 +562,11 @@ export default function App() {
             { tab: "dashboard", icon: <Home className="w-5 h-5" />,        label: language === "pt" ? "Início"    : language === "en" ? "Home"     : "Inicio"   },
             { tab: "search",    icon: <Search className="w-5 h-5" />,      label: language === "pt" ? "Alimentos" : language === "en" ? "Foods"    : "Alimentos"},
             { tab: "scanner",   icon: <Camera className="w-5 h-5" />,      label: language === "pt" ? "Scanner"   : "Scanner"                                  },
-            { tab: "meals",     icon: <ChefHat className="w-5 h-5" />,     label: language === "pt" ? "Cardápio"  : language === "en" ? "Menu"     : "Menú"     },
+            { tab: "diary",     icon: <BookHeart className="w-5 h-5" />,   label: language === "pt" ? "Diário"    : language === "en" ? "Diary"    : "Diario"   },
             { tab: "more",      icon: <Sparkles className="w-5 h-5" />,    label: language === "pt" ? "Mais"      : language === "en" ? "More"     : "Más"      },
           ].map(({ tab, icon, label }) => {
             const isActive = tab === "more"
-              ? (activeTab === "more" || ["growth","vitamins","forum","resources","vaccines","diary"].includes(activeTab))
+              ? (activeTab === "more" || ["growth","vitamins","forum","resources","vaccines","meals"].includes(activeTab))
               : activeTab === tab;
             return (
               <button

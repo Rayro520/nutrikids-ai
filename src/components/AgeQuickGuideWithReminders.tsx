@@ -453,28 +453,55 @@ export default function AgeQuickGuideWithReminders({
           </div>
         )}
 
-        {/* Reminder CTA — bottom of section, well framed */}
-        <div className="mt-2 bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100 rounded-2xl p-4 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
-            <Bell className="w-4 h-4 text-orange-500" />
+        {/* Reminder CTA — 1 clique, 9:00 padrão */}
+        {currentCategoryReminders.length === 0 ? (
+          <div className="mt-2 bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100 rounded-2xl p-4 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
+              <Bell className="w-4 h-4 text-orange-500" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-black text-slate-800 leading-tight">
+                {language === "pt" ? "Receber dica às 9h todos os dias" : language === "en" ? "Receive tip at 9am every day" : "Recibir consejo a las 9am"}
+              </p>
+              <p className="text-[9px] text-gray-400 font-medium mt-0.5">
+                {language === "pt" ? "Dica nutricional + lembrete de atualizar dados" : language === "en" ? "Nutrition tip + data update reminder" : "Consejo + recordatorio de actualizar datos"}
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                const newReminder = { category: selectedMilestone, time: "09:00", channel: "app" };
+                const updated = [...reminders, newReminder];
+                setReminders(updated);
+                localStorage.setItem("nutrikids_configured_reminders", JSON.stringify(updated));
+                localStorage.setItem("nutrikids_reminder_activated_at", new Date().toISOString());
+                addSystemNotification("🔔 Lembrete ativado! Você receberá dicas nutricionais todos os dias às 9h.");
+              }}
+              className="shrink-0 px-3 py-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-[10px] font-black rounded-xl transition-all cursor-pointer shadow-sm shadow-orange-200"
+            >
+              🔔 {language === "pt" ? "Ativar" : language === "en" ? "Activate" : "Activar"}
+            </button>
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-black text-slate-800 leading-tight">
-              {language === "pt" ? "Ativar lembretes diários" : language === "en" ? "Activate daily reminders" : "Activar recordatorios diarios"}
-            </p>
-            <p className="text-[9px] text-gray-400 font-medium mt-0.5">
-              {language === "pt" ? "Avisos & dicas no horário que você escolher" : language === "en" ? "Tips & alerts at your chosen time" : "Consejos y avisos a tu hora elegida"}
-            </p>
+        ) : (
+          <div className="mt-2 bg-emerald-50 border border-emerald-100 rounded-2xl p-4 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
+              <Check className="w-4 h-4 text-emerald-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-black text-emerald-800 leading-tight">
+                {language === "pt" ? "Lembrete ativo às 9h ✓" : language === "en" ? "Reminder active at 9am ✓" : "Recordatorio activo a las 9am ✓"}
+              </p>
+              <p className="text-[9px] text-emerald-600 font-medium mt-0.5">
+                {language === "pt" ? "Dicas diárias de nutrição ativadas" : language === "en" ? "Daily nutrition tips activated" : "Consejos diarios de nutrición activados"}
+              </p>
+            </div>
+            <button
+              onClick={() => { removeReminder(reminders.findIndex(r => r.category === selectedMilestone)); }}
+              className="shrink-0 px-3 py-2 bg-white border border-emerald-200 text-emerald-700 text-[10px] font-black rounded-xl transition-all cursor-pointer hover:bg-emerald-50"
+            >
+              {language === "pt" ? "Desativar" : language === "en" ? "Disable" : "Desactivar"}
+            </button>
           </div>
-          <button
-            onClick={() => setShowConfigId(showConfigId === selectedMilestone ? null : selectedMilestone)}
-            className="shrink-0 px-3 py-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-[10px] font-black rounded-xl transition-all cursor-pointer shadow-sm shadow-orange-200"
-          >
-            {showConfigId === selectedMilestone
-              ? (language === "pt" ? "Fechar" : language === "en" ? "Close" : "Cerrar")
-              : "🔔 " + (language === "pt" ? "Ativar" : language === "en" ? "Activate" : "Activar")}
-          </button>
-        </div>
+        )}
       </div>
     </div>
   );

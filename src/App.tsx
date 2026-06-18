@@ -88,6 +88,46 @@ export default function App() {
     }
   }, [language]);
 
+  // Lembrete diário às 9h — verifica ao abrir o app
+  useEffect(() => {
+    const reminderActive = localStorage.getItem("nutrikids_configured_reminders");
+    if (!reminderActive || !activeProfile) return;
+
+    const lastUpdate = localStorage.getItem(`nutrikids_last_data_update_${activeProfile.id}`);
+    const now = new Date();
+    const lastDate = lastUpdate ? new Date(lastUpdate) : null;
+    const daysSince = lastDate ? Math.floor((now.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24)) : 99;
+
+    const hour = now.getHours();
+    const lastShown = localStorage.getItem("nutrikids_reminder_last_shown");
+    const todayStr = now.toISOString().split("T")[0];
+
+    if (lastShown === todayStr) return;
+    if (hour < 9) return;
+
+    localStorage.setItem("nutrikids_reminder_last_shown", todayStr);
+
+    if (daysSince >= 30) {
+      addSystemNotification(
+        language === "pt"
+          ? `📏 Já faz ${daysSince} dias! Hora de pesar e medir ${activeProfile.name} e atualizar a Curva de Crescimento.`
+          : language === "en"
+          ? `📏 It's been ${daysSince} days! Time to weigh and measure ${activeProfile.name} and update the Growth Curve.`
+          : `📏 ¡Han pasado ${daysSince} días! Es hora de pesar y medir a ${activeProfile.name} y actualizar la Curva de Crecimiento.`
+      );
+    } else {
+      const tips: Record<string, string> = {
+        "0-6_months":  "💡 Dica de hoje: Amamente em livre demanda. O leite materno é completo até os 6 meses!",
+        "6-12_months": "💡 Dica de hoje: Ofereça novos alimentos um por vez e observe por 3 dias antes do próximo.",
+        "1-2_years":   "💡 Dica de hoje: Inclua a criança na mesa da família. Ver os pais comendo bem é o melhor exemplo!",
+        "2-5_years":   "💡 Dica de hoje: Varie as cores no prato — cada cor é um grupo diferente de nutrientes.",
+        "5-10_years":  "💡 Dica de hoje: Substitua biscoitos por frutas na mochila escolar para mais foco e energia.",
+      };
+      const tip = tips[metrics?.category || "6-12_months"] || tips["6-12_months"];
+      addSystemNotification(tip);
+    }
+  }, [activeProfile, language]);
+
   // Persist profiles
   useEffect(() => {
     localStorage.setItem("nutrikids_profiles", JSON.stringify(profiles));

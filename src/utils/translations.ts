@@ -192,7 +192,7 @@ export interface TranslationDictionary {
 export const translations: Record<Language, TranslationDictionary> = {
   pt: {
     appName: "NutriKids AI",
-    subTitle: "Crescendo saudável de IA",
+    subTitle: "Nutrição inteligente para seu filho",
     sealText: "Pediatra Auxiliar",
     trustTitle: "Área de Confiança",
     trustDesc: "Assegurando as diretrizes nacionais e recomendadas internacionais",

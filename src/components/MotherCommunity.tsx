@@ -158,16 +158,22 @@ export default function MotherCommunity({ activeProfile }: MotherCommunityProps)
   };
 
   return (
-    <div id="forum-community-section" className="bg-white rounded-3xl border border-orange-100/40 shadow-xs p-5">
-      
+    <div id="forum-community-section" className="bg-white rounded-3xl border border-orange-100/40 shadow-xs overflow-hidden">
+
       {/* Header */}
-      <div className="flex items-center gap-2 border-b border-orange-50/70 pb-3 mb-5">
-        <Users className="w-5 h-5 text-orange-500" />
-        <div>
-          <h2 className="text-base font-black text-gray-800 tracking-tight font-display">Fórum da Comunidade</h2>
-          <p className="text-[10px] text-gray-450 leading-none">Troca de experiências seguras com supervisão e moderação médica SBP/OMS</p>
+      <div className="bg-gradient-to-r from-orange-500 to-amber-400 px-4 pt-4 pb-3">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+            <Users className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h2 className="text-sm font-black text-white leading-tight">Comunidade de Mães</h2>
+            <p className="text-[9px] text-white/75 font-medium mt-0.5">Moderado por médicos SBP/OMS</p>
+          </div>
         </div>
       </div>
+
+      <div className="p-4">
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
@@ -316,6 +322,7 @@ export default function MotherCommunity({ activeProfile }: MotherCommunityProps)
         </div>
 
       </div>
+      </div>{/* end p-4 */}
     </div>
   );
 }

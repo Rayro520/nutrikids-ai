@@ -112,18 +112,28 @@ export default function AlertaMamaeSearch({ activeProfile }: AlertaMamaeSearchPr
   };
 
   return (
-    <div id="alerta-mamae-search" className="bg-white rounded-3xl border border-orange-100/45 shadow-xs p-5">
-      <div className="flex items-center gap-2 mb-4">
-        <Sparkles className="w-5 h-5 text-orange-500 animate-gentle-pulse" />
-        <h2 className="text-base font-black text-gray-850 tracking-tight">Alerta Mamãe - Search</h2>
+    <div id="alerta-mamae-search" className="bg-white rounded-3xl border border-orange-100/45 shadow-xs overflow-hidden">
+
+      {/* Header */}
+      <div className="bg-gradient-to-r from-orange-500 to-amber-400 px-4 pt-4 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+              <Search className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-sm font-black text-white leading-tight">Alimentos</h2>
+              <p className="text-[9px] text-white/75 font-medium mt-0.5">Veredito científico OMS/SBP para {displayAge}</p>
+            </div>
+          </div>
+          <span className="text-[9px] font-black text-white/90 bg-white/20 border border-white/25 px-2.5 py-1 rounded-full shrink-0">IA ativa</span>
+        </div>
       </div>
 
-      <p className="text-[11px] text-gray-500 mb-4 font-semibold leading-relaxed">
-        Digite um alimento para saber instantaneamente o veredito científico para a faixa de <strong className="text-orange-600 font-extrabold">{displayAge}</strong>.
-      </p>
+      <div className="p-4 space-y-4">
 
       {/* Preset buttons */}
-      <div className="flex flex-wrap gap-1.5 mb-4 items-center">
+      <div className="flex flex-wrap gap-1.5 items-center">
         <span className="text-[10px] text-gray-400 font-extrabold uppercase tracking-wider shrink-0">Favoritos:</span>
         <button onClick={() => handlePresetClick("Mel")} className="px-2 py-0.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-100/55 rounded-lg text-[10px] font-bold">
           🍯 Mel
@@ -275,6 +285,8 @@ export default function AlertaMamaeSearch({ activeProfile }: AlertaMamaeSearchPr
           </div>
         </div>
       )}
+
+      </div>{/* end p-4 */}
     </div>
   );
 }

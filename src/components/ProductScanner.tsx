@@ -198,20 +198,25 @@ export default function ProductScanner({ activeProfile }: ProductScannerProps) {
   };
 
   return (
-    <div id="product-scanner-section" className="bg-white rounded-3xl border border-orange-100/40 shadow-xs p-5">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <Camera className="w-5 h-5 text-orange-500" />
-          <h2 className="text-base font-black text-gray-800 tracking-tight font-display">Varredura de Rótulos</h2>
+    <div id="product-scanner-section" className="bg-white rounded-3xl border border-orange-100/40 shadow-xs overflow-hidden">
+
+      {/* Header */}
+      <div className="bg-gradient-to-r from-orange-500 to-amber-400 px-4 pt-4 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+              <Camera className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-sm font-black text-white leading-tight">Scanner de Rótulos</h2>
+              <p className="text-[9px] text-white/75 font-medium mt-0.5">IA analisa açúcar, conservantes e gorduras</p>
+            </div>
+          </div>
+          <span className="text-[9px] font-black text-white/90 bg-white/20 border border-white/25 px-2.5 py-1 rounded-full shrink-0">IA ativa</span>
         </div>
-        <span className="text-[9px] bg-orange-50 text-orange-800 font-extrabold px-2 py-0.5 rounded-md border border-orange-100/40">
-          IA Multimodal Ativa
-        </span>
       </div>
 
-      <p className="text-sm text-gray-500 mb-6">
-        Fotografe o rótulo de leites, papinhas, sucos e biscoitos infantis usando a câmera do seu celular, ou faça upload de uma foto com ingredientes para que nossa IA faça a varredura crítica de açúcares, conservantes e gorduras.
-      </p>
+      <div className="p-4">
 
       {/* Primary Scanner Frame */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -220,8 +225,8 @@ export default function ProductScanner({ activeProfile }: ProductScannerProps) {
         <div className="lg:col-span-5 space-y-4">
           
           {/* Active Camera Window simulated or real */}
-          <div className="aspect-video sm:aspect-[4/3] bg-slate-950 rounded-2xl relative overflow-hidden border border-slate-800 flex flex-col items-center justify-center text-white">
-            
+          <div className="aspect-video sm:aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl relative overflow-hidden border border-slate-700/50 flex flex-col items-center justify-center text-white">
+
             {useRealCamera ? (
               <video
                 ref={videoRef}
@@ -229,10 +234,12 @@ export default function ProductScanner({ activeProfile }: ProductScannerProps) {
                 className="w-full h-full object-cover rounded-2xl"
               />
             ) : (
-              <div className="text-center p-6 flex flex-col items-center">
-                <Camera className="w-10 h-10 text-slate-600 mb-2 animate-gentle-pulse" />
-                <p className="text-xs text-slate-400 font-medium">Câmera em modo Standby</p>
-                <p className="text-[10px] text-slate-500 mt-1">Toque para ativar câmera traseira ou envie uma foto do rótulo</p>
+              <div className="text-center p-6 flex flex-col items-center gap-2">
+                <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center mb-1">
+                  <Camera className="w-7 h-7 text-orange-400" />
+                </div>
+                <p className="text-xs text-white/80 font-semibold">Câmera em standby</p>
+                <p className="text-[10px] text-white/40 leading-snug max-w-[180px] text-center">Ative a câmera ou envie uma foto do rótulo para análise</p>
               </div>
             )}
 
@@ -255,7 +262,7 @@ export default function ProductScanner({ activeProfile }: ProductScannerProps) {
             {!useRealCamera ? (
               <button
                 onClick={startCamera}
-                className="flex-1 py-2 bg-slate-900 text-white font-bold text-xs uppercase tracking-wider rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-1.5 shadow-2xs active:scale-95"
+                className="flex-1 py-2 bg-orange-500 text-white font-bold text-xs uppercase tracking-wider rounded-2xl hover:bg-orange-600 transition-all flex items-center justify-center gap-1.5 shadow-xs active:scale-95"
               >
                 <Camera className="w-4 h-4 text-orange-400" />
                 Ativar Câmera
@@ -422,6 +429,7 @@ export default function ProductScanner({ activeProfile }: ProductScannerProps) {
           )}
         </div>
       </div>
+      </div>{/* end p-4 */}
     </div>
   );
 }

@@ -186,22 +186,26 @@ export default function GrowthCurveChart({ activeProfile }: GrowthCurveChartProp
   });
 
   return (
-    <div id="growth-curve-section" className="bg-white rounded-3xl border border-orange-100/40 shadow-xs p-5">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-orange-50/70 pb-3 mb-5">
-        <div className="flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-orange-500" />
-          <div>
-            <h2 className="text-base font-black text-gray-800 tracking-tight font-display">Curva de Crescimento</h2>
-            <p className="text-[10px] text-gray-450 leading-none">Marcas oficiais de evolução (OMS / SBP)</p>
-          </div>
-        </div>
+    <div id="growth-curve-section" className="bg-white rounded-3xl border border-orange-100/40 shadow-xs overflow-hidden">
 
-        {/* Tab triggers */}
-        <div className="flex gap-1 bg-slate-50 border border-slate-100 p-1 rounded-xl">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-orange-500 to-amber-400 px-4 pt-4 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+              <TrendingUp className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-sm font-black text-white leading-tight">Curva de Crescimento</h2>
+              <p className="text-[9px] text-white/75 font-medium mt-0.5">Percentis oficiais OMS/SBP</p>
+            </div>
+          </div>
+          {/* Tab triggers */}
+          <div className="flex gap-1 bg-white/20 border border-white/25 p-1 rounded-xl">
           <button
             onClick={() => setActiveTab("weight")}
             className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all ${
-              activeTab === "weight" ? "bg-white text-slate-800 shadow-2xs border border-gray-100" : "text-gray-400 hover:text-gray-650"
+              activeTab === "weight" ? "bg-white/90 text-slate-800 shadow-2xs" : "text-white/70 hover:text-white"
             }`}
           >
             Peso (kg)
@@ -209,14 +213,16 @@ export default function GrowthCurveChart({ activeProfile }: GrowthCurveChartProp
           <button
             onClick={() => setActiveTab("height")}
             className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all ${
-              activeTab === "height" ? "bg-white text-slate-800 shadow-2xs border border-gray-100" : "text-gray-400 hover:text-gray-650"
+              activeTab === "height" ? "bg-white/90 text-slate-800 shadow-2xs" : "text-white/70 hover:text-white"
             }`}
           >
             Altura (cm)
           </button>
         </div>
+        </div>
       </div>
 
+      <div className="p-4">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* SVG Graphic - 8 columns */}
@@ -409,6 +415,7 @@ export default function GrowthCurveChart({ activeProfile }: GrowthCurveChartProp
 
         </div>
       </div>
+      </div>{/* end p-4 */}
     </div>
   );
 }

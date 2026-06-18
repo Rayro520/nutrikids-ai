@@ -83,28 +83,31 @@ export default function BabyDiary({ activeProfile }: BabyDiaryProps) {
     language === "en" ? en : language === "es" ? es : pt;
 
   return (
-    <div className="bg-white rounded-3xl border border-orange-100/40 shadow-xs p-5 space-y-4">
+    <div className="bg-white rounded-3xl border border-orange-100/40 shadow-xs overflow-hidden">
+
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <BookHeart className="w-5 h-5 text-orange-500" />
-          <div>
-            <h2 className="text-base font-black text-gray-800 tracking-tight">
-              {t("Diário do Bebê", "Baby Diary", "Diario del Bebé")}
-            </h2>
-            <p className="text-[10px] text-gray-400 font-semibold">
-              {t("Registros de hoje", "Today's entries", "Registros de hoy")} ({todayEntries.length})
-            </p>
+      <div className="bg-gradient-to-r from-orange-500 to-amber-400 px-4 pt-4 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+              <BookHeart className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-sm font-black text-white leading-tight">{t("Diário do Bebê", "Baby Diary", "Diario del Bebé")}</h2>
+              <p className="text-[9px] text-white/75 font-medium mt-0.5">{t("Registros de hoje", "Today's entries", "Registros de hoy")} · {todayEntries.length} {t("entradas", "entries", "entradas")}</p>
+            </div>
           </div>
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white/20 hover:bg-white/30 border border-white/30 active:scale-95 text-white text-[10px] font-black rounded-xl transition-all"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            {t("Registrar", "Add", "Registrar")}
+          </button>
         </div>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-1 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-[10px] font-black rounded-xl transition-all shadow-xs"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          {t("Registrar", "Add", "Registrar")}
-        </button>
       </div>
+
+      <div className="p-4 space-y-4">
 
       {/* Quick stats */}
       {todayEntries.length > 0 && (
@@ -228,6 +231,7 @@ export default function BabyDiary({ activeProfile }: BabyDiaryProps) {
           })}
         </div>
       )}
+      </div>{/* end p-4 */}
     </div>
   );
 }

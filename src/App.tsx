@@ -205,7 +205,7 @@ export default function App() {
           {["growth", "vitamins", "forum", "resources", "vaccines", "diary"].includes(activeTab) && (
             <button
               onClick={() => setActiveTab("more")}
-              className="flex items-center gap-1 text-[11px] text-orange-600 font-extrabold bg-orange-50 hover:bg-orange-100/80 px-3 py-1.5 rounded-full transition-all border border-orange-100/40 w-fit active:scale-95"
+              className="flex items-center gap-1.5 text-[11px] text-orange-600 font-black bg-white hover:bg-orange-50 px-3 py-1.5 rounded-full transition-all border border-orange-100 w-fit active:scale-95 shadow-xs"
             >
               {t.backToMore}
             </button>

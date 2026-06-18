@@ -105,21 +105,28 @@ export default function VaccineChecklist({ activeProfile }: VaccineChecklistProp
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-orange-100/40 shadow-xs p-5 space-y-5">
+    <div className="bg-white rounded-3xl border border-orange-100/40 shadow-xs overflow-hidden">
+
       {/* Header */}
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-orange-500" />
-            <h2 className="text-base font-black text-gray-800 tracking-tight">{label("title")}</h2>
+      <div className="bg-gradient-to-r from-orange-500 to-amber-400 px-4 pt-4 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-sm font-black text-white leading-tight">{label("title")}</h2>
+              <p className="text-[9px] text-white/75 font-medium mt-0.5">{label("sub")}</p>
+            </div>
           </div>
-          <p className="text-[10px] text-gray-400 font-semibold mt-0.5">{label("sub")}</p>
-        </div>
-        <div className="text-right shrink-0">
-          <span className="text-lg font-black text-orange-500">{totalDone}</span>
-          <span className="text-[9px] text-gray-400 font-bold block leading-none">{label("progress")}</span>
+          <div className="text-right shrink-0">
+            <span className="text-lg font-black text-white">{totalDone}</span>
+            <span className="text-[9px] text-white/70 font-bold block leading-none">{label("progress")}</span>
+          </div>
         </div>
       </div>
+
+      <div className="p-4 space-y-5">
 
       {/* Progress bar */}
       {activeProfile && (
@@ -225,6 +232,7 @@ export default function VaccineChecklist({ activeProfile }: VaccineChecklistProp
             : "Este calendário é baseado nas diretrizes SBP 2024 para a rede pública brasileira (SUS). Siga sempre o calendário orientado pelo seu pediatra."}
         </p>
       </div>
+      </div>{/* end p-4 */}
     </div>
   );
 }

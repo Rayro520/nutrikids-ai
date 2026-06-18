@@ -137,7 +137,7 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-[#FFF5EF] via-[#FFF9F6] to-[#FFEFE6] flex flex-col items-center justify-center font-sans text-gray-800 antialiased selection:bg-orange-100 selection:text-orange-900 overflow-x-hidden sm:p-2 md:p-3">
       
       {/* Smartphone Device Simulator on wider screens, standard 100% fullscreen on actual mobile phones */}
-      <div className="w-full sm:max-w-[412px] sm:h-[max(600px,min(845px,94vh))] h-screen sm:rounded-[44px] sm:border-[10px] sm:border-slate-800 sm:shadow-[0_24px_60px_-15px_rgba(249,115,22,0.18)] bg-[#FFFDFC] flex flex-col overflow-hidden relative sm:ring-1 sm:ring-slate-900/10 sm:my-auto">
+      <div className="w-full sm:max-w-[412px] sm:h-[max(600px,min(845px,94vh))] h-dvh sm:rounded-[44px] sm:border-[10px] sm:border-slate-800 sm:shadow-[0_24px_60px_-15px_rgba(249,115,22,0.18)] bg-[#FFFDFC] flex flex-col overflow-hidden relative sm:ring-1 sm:ring-slate-900/10 sm:my-auto">
         
         {/* Cute iPhone Notch / Dynamic Island Detail (Hidden on actual mobile view for maximum usability) */}
         <div className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 h-5 w-32 bg-slate-800 rounded-b-xl z-50"></div>
@@ -557,7 +557,7 @@ export default function App() {
         </main>
 
         {/* Bottom Nav */}
-        <nav className="bg-white/95 backdrop-blur-md border-t border-orange-100/50 flex justify-around items-center shrink-0 shadow-[0_-5px_15px_-3px_rgba(0,0,0,0.03)] z-20 pb-5 pt-2">
+        <nav className="bg-white/95 backdrop-blur-md border-t border-orange-100/50 flex justify-around items-center shrink-0 shadow-[0_-5px_15px_-3px_rgba(0,0,0,0.03)] z-20 pb-[env(safe-area-inset-bottom,20px)] pt-2 sm:pb-5">
           {[
             { tab: "dashboard", icon: <Home className="w-5 h-5" />,        label: language === "pt" ? "Início"    : language === "en" ? "Home"     : "Inicio"   },
             { tab: "search",    icon: <Search className="w-5 h-5" />,      label: language === "pt" ? "Alimentos" : language === "en" ? "Foods"    : "Alimentos"},

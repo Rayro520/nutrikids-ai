@@ -88,6 +88,30 @@ export default function App() {
     }
   }, [language]);
 
+  // Persist profiles
+  useEffect(() => {
+    localStorage.setItem("nutrikids_profiles", JSON.stringify(profiles));
+    if (profiles.length > 0 && !activeProfileId) {
+      setActiveProfileId(profiles[0].id);
+    }
+  }, [profiles]);
+
+  useEffect(() => {
+    if (activeProfileId) {
+      localStorage.setItem("nutrikids_active_profile_id", activeProfileId);
+    } else {
+      localStorage.removeItem("nutrikids_active_profile_id");
+    }
+  }, [activeProfileId]);
+
+  const activeProfile = profiles.find((p) => p.id === activeProfileId) || null;
+  const metrics = activeProfile ? calculateChildMetrics(activeProfile.birthDate) : null;
+
+  // Custom notifications push on action
+  const addSystemNotification = (msg: string) => {
+    setNotifications((prev) => [msg, ...prev.slice(0, 5)]); // limit to 6
+  };
+
   // Lembrete diário às 9h — verifica ao abrir o app
   useEffect(() => {
     const reminderActive = localStorage.getItem("nutrikids_configured_reminders");
@@ -109,11 +133,7 @@ export default function App() {
 
     if (daysSince >= 30) {
       addSystemNotification(
-        language === "pt"
-          ? `📏 Já faz ${daysSince} dias! Hora de pesar e medir ${activeProfile.name} e atualizar a Curva de Crescimento.`
-          : language === "en"
-          ? `📏 It's been ${daysSince} days! Time to weigh and measure ${activeProfile.name} and update the Growth Curve.`
-          : `📏 ¡Han pasado ${daysSince} días! Es hora de pesar y medir a ${activeProfile.name} y actualizar la Curva de Crecimiento.`
+        `📏 Já faz ${daysSince} dias! Hora de pesar e medir ${activeProfile.name} e atualizar a Curva de Crescimento.`
       );
     } else {
       const tips: Record<string, string> = {
@@ -127,30 +147,6 @@ export default function App() {
       addSystemNotification(tip);
     }
   }, [activeProfile, language]);
-
-  // Persist profiles
-  useEffect(() => {
-    localStorage.setItem("nutrikids_profiles", JSON.stringify(profiles));
-    if (profiles.length > 0 && !activeProfileId) {
-      setActiveProfileId(profiles[0].id);
-    }
-  }, [profiles]);
-
-  useEffect(() => {
-    if (activeProfileId) {
-      localStorage.setItem("nutrikids_active_profile_id", activeProfileId);
-    } else {
-      localStorage.removeItem("nutrikids_active_profile_id");
-    }
-  }, [activeProfileId]);
-
-  const activeProfile = profiles.find((p) => p.id === activeProfileId) || null;
-  const metrics = activeProfile ? calculateChildMetrics(activeProfile.birthDate) : null;
-  
-  // Custom notifications push on action
-  const addSystemNotification = (msg: string) => {
-    setNotifications((prev) => [msg, ...prev.slice(0, 5)]); // limit to 6
-  };
 
   const handleSaveProfile = (newProfile: ChildProfile) => {
     setProfiles((prev) => {

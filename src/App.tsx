@@ -277,7 +277,7 @@ export default function App() {
                   <div className="grid grid-cols-2 gap-3">
                     {[
                       { label: language === "pt" ? "🔍 Pesquisar Alimento" : language === "en" ? "🔍 Search Food" : "🔍 Buscar Alimento", tab: "search", color: "bg-orange-50 border-orange-100 text-orange-700" },
-                      { label: language === "pt" ? "💬 Perguntar à IA" : language === "en" ? "💬 Ask the AI" : "💬 Preguntar a la IA", tab: "dashboard", color: "bg-slate-50 border-slate-100 text-slate-700" },
+                      { label: language === "pt" ? "💬 Perguntar à IA" : language === "en" ? "💬 Ask the AI" : "💬 Preguntar a la IA", tab: "search", color: "bg-slate-50 border-slate-100 text-slate-700" },
                     ].map((a) => (
                       <button key={a.tab + a.label} onClick={() => { setActiveTab(a.tab); if (a.tab === "dashboard") { setTimeout(() => document.getElementById("ai-chat-section")?.scrollIntoView({ behavior: "smooth" }), 100); }}} className={`py-3 rounded-2xl border text-xs font-black transition-all active:scale-95 ${a.color}`}>
                         {a.label}

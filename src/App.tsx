@@ -232,7 +232,7 @@ export default function App() {
                         &ldquo;{t.introImpactPhrase}&rdquo;
                       </p>
                       <button
-                        onClick={() => { setIsAddingNewChild(true); setActiveProfileId(null); }}
+                        onClick={() => { setIsAddingNewChild(true); setActiveProfileId(null); setTimeout(() => document.getElementById("child-profile-section")?.scrollIntoView({ behavior: "smooth", block: "start" }), 150); }}
                         className="w-full py-3 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-black text-sm rounded-2xl flex items-center justify-center gap-2 transition-all shadow-sm shadow-orange-200"
                       >
                         <Baby className="w-4 h-4" />
